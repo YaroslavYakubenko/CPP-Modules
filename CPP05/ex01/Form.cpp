@@ -1,5 +1,9 @@
 #include "Form.hpp"
 
+Form::Form() : name("default"), isSigned(false), gradeToSign(150), gradeToExecute(150) {
+	std::cout << "Form default constructor called" << std::endl;
+}
+
 Form::Form(const std::string& name, int gradeToSign, int gradeToExecute) : name(name), isSigned(false), gradeToSign(gradeToSign), gradeToExecute(gradeToExecute) {
 	if (gradeToSign < 1 || gradeToExecute < 1)
 		throw Form::GradeToHighException();
