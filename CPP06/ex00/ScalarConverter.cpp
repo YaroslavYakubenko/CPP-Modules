@@ -15,7 +15,7 @@ bool isFloat(const std::string& str) {
 		return true;
 	char *end;
 	std::strtof(str.c_str(), &end);
-	return *end == 'f';
+	return (*end == 'f' && *(end + 1) == '\0');
 }
 
 bool isDouble(const std::string& str) {
@@ -91,7 +91,7 @@ void ScalarConverter::convert(std::string literal) {
 	} else {
 		std::cout << "char: impossible" << std::endl;
 		std::cout << "int: impossible" << std::endl;
-		std::cout << "float: impossilble" << std::endl;
+		std::cout << "float: impossible" << std::endl;
 		std::cout << "double: impossible" << std::endl;
 	}
 }
