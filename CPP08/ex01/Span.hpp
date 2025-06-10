@@ -6,6 +6,7 @@
 #include <iterator>
 #include <limits>
 #include <stdexcept>
+#include <ctime>
 
 class Span {
 private:
