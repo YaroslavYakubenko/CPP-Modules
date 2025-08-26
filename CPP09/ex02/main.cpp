@@ -17,12 +17,16 @@ int main(int ac, char **av) {
 	for (int i = 1; i < ac; ++i) {
 		std::string token(av[i]);
 		if (token.find_first_not_of("0123456789") != std::string::npos) {
-			std::cerr << "Error: invalid input '" << token << "'" << std::endl;
+			std::cerr << "Error" << std::endl;
 			return 1;
 		}
 		long val = std::strtol(token.c_str(), NULL, 10);
 		if (val < 0 || val > 2147483647) {
-			std::cerr << "Error: out of range number '" << token << "'" << std::endl;
+			std::cerr << "Error" << std::endl;
+			return 1;
+		}
+		if (std::find(vec.begin(), vec.end(), static_cast<int>(val)) != vec.end()) {
+			std::cerr << "Error: duplicate value." << std::endl;
 			return 1;
 		}
 		vec.push_back(static_cast<int>(val));
