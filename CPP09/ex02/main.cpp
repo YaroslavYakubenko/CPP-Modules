@@ -7,8 +7,8 @@ long getMicroseconds() {
 }
 
 int main(int ac, char **av) {
-	if (ac < 2) {
-		std::cerr << "Error: no input." << std::endl;
+	if (ac < 3) {
+		std::cerr << "Error" << std::endl;
 		return 1;
 	}
 	std::vector<int> vec;

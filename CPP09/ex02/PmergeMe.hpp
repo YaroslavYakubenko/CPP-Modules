@@ -34,17 +34,9 @@ Iterator myLowerBound(Iterator first, Iterator last, const T& value) {
 }
 
 template <typename Container>
-void printContainer(const Container& c) {
-    for (typename Container::const_iterator it = c.begin(); it != c.end(); ++it)
-        std::cout << *it << " ";
-    std::cout << std::endl;
-}
-
-template <typename Container>
 void makePairs(const Container& input, Container& mainChain, Container& pending, bool& hasStraggler, typename Container::value_type& straggler) {
 	typename Container::const_iterator it = input.begin();
 	while (std::distance(it, input.end()) >= 2) {
-		// std::cout << *it << std::endl;
 		typename Container::value_type a = *it++;
 		typename Container::value_type b = *it++;
 		if (a <= b) {
@@ -105,7 +97,6 @@ void insertPending(Container& mainChain, const Container& pending) {
 		typename Container::const_iterator it = pending.begin();
 		std::advance(it, index);
 		insertSingle(mainChain, *it);
-		// printContainer(mainChain);
 		inserted[index] = 1;
 	}
 	for (i = 0; i < inserted.size(); ++i) {
@@ -125,7 +116,6 @@ void mergeInsertSort(Container& container) {
 	Container pending;
 	bool hasStraggler;
 	typename Container::value_type straggler;
-	// printContainer(pending);
 	makePairs(container, mainChain, pending, hasStraggler, straggler);
 	mergeInsertSort(mainChain);
 	insertPending(mainChain, pending);
