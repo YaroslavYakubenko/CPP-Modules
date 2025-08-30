@@ -55,23 +55,31 @@ void makePairs(const Container& input, Container& mainChain, Container& pending,
 	}
 }
 
-// template <typename Container>
-inline std::vector<size_t> generateJacodsthal(size_t n) {
-	std::vector<size_t> seq;
-	size_t j0 = 0, j1 = 1;
-	if (n > 0)
-		seq.push_back(j0);
-	if (n > 1)
-		seq.push_back(j1);
-	while (true) {
-		size_t j2 = j1 + 2 * j0;
-		if (j2 >= n)
-			break;
-		seq.push_back(j2);
-		j0 = j1;
-		j1 = j2;
-	}
-	return seq;
+inline std::vector<size_t> generateJacobsthal(size_t n) {
+    std::vector<size_t> jacob;
+    jacob.push_back(0);
+    if (n > 0) jacob.push_back(1);
+    while (true) {
+        size_t next = jacob[jacob.size() - 1] + 2 * jacob[jacob.size() - 2];
+        if (next > n)
+            break;
+        jacob.push_back(next);
+    }
+
+    std::vector<size_t> seq;
+    seq.push_back(0);
+    for (size_t k = 1; k < jacob.size(); ++k) {
+        size_t cur = jacob[k];
+        while (cur > jacob[k-1]) {
+            seq.push_back(cur);
+            --cur;
+        }
+    }
+	std::cout << "Jacobsthal: ";
+    for (size_t i = 0; i < seq.size(); ++i)
+        std::cout << seq[i] << " ";
+    std::cout << std::endl;
+    return seq;
 }
 
 template <typename Container>
@@ -87,7 +95,7 @@ void insertSingle(Container& container, const typename Container::value_type& va
 
 template <typename Container>
 void insertPending(Container& mainChain, const Container& pending) {
-	std::vector<size_t> indices = generateJacodsthal(pending.size());
+	std::vector<size_t> indices = generateJacobsthal(pending.size());
 	std::vector<bool> inserted(pending.size(), false);
 	size_t i;
 	for (i = 0; i < indices.size(); ++i) {
@@ -119,9 +127,10 @@ void mergeInsertSort(Container& container) {
 	makePairs(container, mainChain, pending, hasStraggler, straggler);
 	mergeInsertSort(mainChain);
 	insertPending(mainChain, pending);
-	if (hasStraggler) {
-		if (std::find(mainChain.begin(), mainChain.end(), straggler) == mainChain.end())
-			insertSingle(mainChain, straggler);
-	}
+	if (hasStraggler)
+		insertSingle(mainChain, straggler);
 	container = mainChain;
 }
+
+
+// ./PmergeMe $(shuf -i 1-100000 -n 3000)
