@@ -55,8 +55,9 @@ void makePairs(const Container& input, Container& mainChain, Container& pending,
 	}
 }
 
-inline std::vector<size_t> generateJacobsthal(size_t n) {
-    std::vector<size_t> jacob;
+template <typename T>
+std::vector<T> generateJacobsthal(size_t n) {
+    std::vector<T> jacob;
     jacob.push_back(0);
     if (n > 0) jacob.push_back(1);
     while (true) {
@@ -85,8 +86,6 @@ inline std::vector<size_t> generateJacobsthal(size_t n) {
 template <typename Container>
 void insertSingle(Container& container, const typename Container::value_type& value) {
 	typename Container::iterator pos;
-	typename std::iterator_traits<typename Container::iterator>::iterator_category tag;
-	(void)tag;
 	pos = myLowerBound(container.begin(), container.end(), value);
 	if (pos != container.end() && *pos == value)
 		return;
@@ -95,7 +94,7 @@ void insertSingle(Container& container, const typename Container::value_type& va
 
 template <typename Container>
 void insertPending(Container& mainChain, const Container& pending) {
-	std::vector<size_t> indices = generateJacobsthal(pending.size());
+	std::vector<size_t> indices = generateJacobsthal<size_t>(pending.size());
 	std::vector<bool> inserted(pending.size(), false);
 	size_t i;
 	for (i = 0; i < indices.size(); ++i) {
