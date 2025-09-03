@@ -89,13 +89,10 @@ void BitcoinExchange::inputFile(const std::string& filename) {
 			std::cerr << "Error: bad input => " << line << std::endl;
 			continue;
 		}
-
-		//deleting spaces
 		date.erase(0, date.find_first_not_of(" \t"));
 		date.erase(date.find_last_not_of(" \t") + 1);
 		rateStr.erase(0, rateStr.find_first_not_of(" \t"));
 		rateStr.erase(rateStr.find_last_not_of(" \t") + 1);
-
 		if (!isValidDate(date)) {
 			std::cerr << "Error: bad input => " << line << std::endl;
 		}
