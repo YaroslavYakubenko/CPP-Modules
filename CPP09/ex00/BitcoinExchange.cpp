@@ -39,6 +39,12 @@ void BitcoinExchange::loadDatabase(const std::string& filename) {
 bool BitcoinExchange::isValidDate(const std::string& date) const {
 	if (date.length() != 10 || date[4] != '-' || date[7] != '-')
 		return false;
+	for (size_t i = 0; i < date.length(); ++i) {
+		if (i == 4 || i == 7)
+			continue;
+		if (!isdigit(date[i]))
+			return false;
+	}
 	int year, month, day;
 	try {
 		year = std::atoi(date.substr(0, 4).c_str());
@@ -95,6 +101,7 @@ void BitcoinExchange::inputFile(const std::string& filename) {
 		rateStr.erase(rateStr.find_last_not_of(" \t") + 1);
 		if (!isValidDate(date)) {
 			std::cerr << "Error: bad input => " << line << std::endl;
+			continue;
 		}
 		float value;
 		try {
